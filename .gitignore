@@ -1,0 +1,15 @@
+# generated output files (rebuilt by make)
+output/*.rds
+output/*.png
+
+# rendered report
+*.html
+
+# R / OS files
+.Rhistory
+.RData
+.Rproj.user/
+.DS_Store
+
+# combined copy of the four raw files; now rebuilt by code/01_clean_data.R
+raw_data/heart_disease.csv
