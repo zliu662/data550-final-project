@@ -15,3 +15,8 @@ output/figure1.png: code/03_make_figure1.R output/heart_clean.rds
 .PHONY: clean
 clean:
 	rm -f output/*.rds output/*.png heart_disease_report.html
+
+# restore the R package environment recorded in renv.lock
+.PHONY: install
+install:
+	Rscript -e "renv::restore(prompt = FALSE)"
