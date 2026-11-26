@@ -1,92 +1,48 @@
 # Heart Disease Across Four Study Sites
 
-DATA 550 final project. The report uses the
-[UCI Heart Disease dataset](https://doi.org/10.24432/C52P4X) (Janosi et al., 1989):
-920 patients evaluated for coronary heart disease at four sites (Cleveland,
-Hungary, Switzerland, and Long Beach VA). It
+This is my DATA 550 final project. It uses the
+[UCI Heart Disease dataset](https://doi.org/10.24432/C52P4X), which has 920
+patients from four sites: Cleveland, Hungary, Switzerland, and Long Beach VA.
 
-1. describes patient characteristics overall and by heart disease status (Table 1), and
-2. compares the prevalence of heart disease across the four sites (Figure 1).
+The report has:
 
-## Synchronizing the package environment
+- **Table 1**: patient characteristics, overall and by heart disease status
+- **Figure 1**: how common heart disease is at each site
 
-This project uses [renv](https://rstudio.github.io/renv/) to record the exact
-versions of the R packages used to build the report. The versions are listed in
-`renv.lock` (created with R 4.4.1). When R starts in this directory,
-`.Rprofile` runs `renv/activate.R`, which switches R to the project's own
-package library.
+## Step 1: Install the packages
 
-After cloning the repository, run this from the project root:
+This project uses `renv` to keep track of R package versions. The versions are
+saved in `renv.lock`.
+
+After you clone the repo, open a terminal in the project folder and run:
 
 ```bash
 make install
 ```
 
-This runs `renv::restore(prompt = FALSE)`, which installs the package versions
-listed in `renv.lock` into a project-specific library (`renv/library/`, not
-tracked by git). If renv itself is not installed yet, `renv/activate.R`
-installs it first. Run `make install` once before building the report, and
-again whenever `renv.lock` changes.
+This installs the same package versions I used. You only need to run it once.
 
-## Generating the final report
-
-After synchronizing the package environment, run this from the project root:
+## Step 2: Build the report
 
 ```bash
 make
 ```
 
-This builds `heart_disease_report.html`. Run `make clean` to remove all generated
-files and rebuild from scratch.
+This creates `heart_disease_report.html`. To delete the outputs and start over,
+run `make clean` and then `make`.
 
-Requirements: R (the lockfile was created with R 4.4.1), make, and pandoc
-(included with RStudio). `make install` installs all required R packages.
+You need R, make, and pandoc. Pandoc comes with RStudio.
 
-## Repository contents
+## What's in this repo
 
-`raw_data/`
-
-- `processed.cleveland.data`, `processed.hungarian.data`,
-  `processed.switzerland.data`, `processed.va.data`: raw data from the UCI
-  repository, one file per site
-
-`code/01_clean_data.R`
-
-- combines the four raw files, recodes implausible 0 values of cholesterol and
-  resting blood pressure as missing, and creates a binary heart disease outcome
-- saves `output/heart_clean.rds`
-
-`code/02_make_table1.R`
-
-- **creates the required table (Table 1)**: patient characteristics overall and
-  by heart disease status, made with `gtsummary`
-- saves `output/table1.rds`
-
-`code/03_make_figure1.R`
-
-- **creates the required figure (Figure 1)**: bar chart of heart disease
-  prevalence by study site
-- saves `output/figure1.png` and `output/prev_by_site.rds` (prevalence values
-  used in the report text)
-
-`code/04_render_report.R`
-
-- renders `heart_disease_report.Rmd`
-
-`heart_disease_report.Rmd`
-
-- reads the cleaned data, table, and figure from `output/` and writes the final report
-
-`Makefile`
-
-- rules for building each output and the final report
-- `make install` restores the package environment from `renv.lock`
-
-`renv.lock`, `renv/`, `.Rprofile`
-
-- renv lockfile recording package versions, plus the files that activate the
-  project library (`renv/activate.R`, `renv/settings.json`)
-
-`output/`
-
-- holds the generated outputs (not tracked by git)
+| File | What it does |
+| --- | --- |
+| `raw_data/` | Raw data from UCI, one file per site |
+| `code/01_clean_data.R` | Combines and cleans the data, saves `output/heart_clean.rds` |
+| `code/02_make_table1.R` | **Makes Table 1**, saves `output/table1.rds` |
+| `code/03_make_figure1.R` | **Makes Figure 1**, saves `output/figure1.png` |
+| `code/04_render_report.R` | Renders the report |
+| `heart_disease_report.Rmd` | The report |
+| `Makefile` | Rules for `make`, `make install`, and `make clean` |
+| `renv.lock`, `renv/`, `.Rprofile` | renv files for the package environment |
+| `output/` | Files made by the code (not tracked by git) |
